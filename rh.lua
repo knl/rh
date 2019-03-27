@@ -984,11 +984,14 @@ function rh_checkout(url)
     end
   end
   if whole ~= nil then
+    if whole:sub(-4, -1) == ".git" then
+      whole = whole:sub(1, -5)
+    end
     local patterns = whole:split('/')
     local M = rh_match(patterns)
-    local root = os.path.join(os.path.expand(RH_ROOT), whole)
     if M == nil or #M == 0 then
       -- we need to do the checkout
+      local root = os.path.join(os.path.expand(RH_ROOT), whole)
       os.execute("mkdir -p '" .. root .. "'")
       os.execute("cd '" .. root .. "' && git clone '" .. url .. "' .")
     end
