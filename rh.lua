@@ -924,8 +924,15 @@ function rh_cd(patterns)
     return nil
   end
   if #patterns == 1 then
-    -- check if we are passing an url
-    if patterns[1]:match("^git://") or patterns[1]:match("^https?://") then
+    -- check if we are passing an url, per `git help clone`
+    -- at the moment, only support github.com and gitlab.com
+    if (patterns[1]:match("^(git://") or
+          patterns[1]:match("^https?://") or
+          patterns[1]:match("^ssh://") or
+          patterns[1]:match("^[^/]+:.*/"))
+      and
+      (patterns[1]:match("github") or patterns[1]:match("gitlab"))
+    then
       return rh_checkout(patterns[1])
     end
     -- check if we're passing an absolute dir
@@ -966,9 +973,18 @@ end
 -- checkout
 ---local --------------------------------------------------------------
 function rh_checkout(url)
-  local whole, server, org, repo = url:match(".*://(([^/]+)/([^/]+)/([^/]+))")
-  if whole ~= nil and server ~= nil and org ~= nil and repo ~= nil then
-    patterns = whole:split('/')
+  local whole = url:match(".*://(([^/]+)/([^/]+)/([^/]+))")
+  if whole == nil then
+    -- try scp variant [user@]server:path/to/repo.git
+    -- in this case we'll have to change some args
+    local user_server, org, repo = url:match("([^/]+):([^/]+)/([^/]+)")
+    if user_server ~= nil and org ~= nil and repo ~= nil then
+      local extract = user_server:split("@")
+      whole = extract[#extract] .. "/" .. org .. "/" .. repo
+    end
+  end
+  if whole ~= nil then
+    local patterns = whole:split('/')
     local M = rh_match(patterns)
     local root = os.path.join(os.path.expand(RH_ROOT), whole)
     if M == nil or #M == 0 then
