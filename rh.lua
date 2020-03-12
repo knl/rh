@@ -1082,11 +1082,8 @@ function rh_init()
       DATA_FILE = _rh_data
     else
       -- avoid windows environments affect cygwin & msys
-      if _rh_data:sub(2, 2) ~= ':' then
-        local t = _rh_data:sub(3, 3)
-        if t ~= '/' and t ~= "\\" then
-          DATA_FILE = _rh_data
-        end
+      if not string.match(_rh_data, '^%a:[/\\]') then
+				DATA_FILE = _rh_data
       end
     end
   end
