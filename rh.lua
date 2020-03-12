@@ -1,8 +1,8 @@
 #!/usr/bin/env lua
 --=====================================================================
 --
--- rh.lua - repository hierarchy aware cd command, by knl 2019
--- Based on z.lua - a cd command that learns, by skywind 2018, 2019
+-- rh.lua - repository hierarchy aware cd command, by knl 2020
+-- Based on z.lua - a cd command that learns, by skywind 2018, 2019, 2020
 -- Licensed under MIT license.
 --
 -- Version 1.0.0, Last Modified: 2019/03/22
