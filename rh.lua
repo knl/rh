@@ -851,7 +851,8 @@ function path_match(components, patterns)
   local j = 3
   local i = 0
   for i = #patterns, 1, -1 do
-    local pat = patterns[i]
+    -- use - as a regular character in the pattern
+    local pat = patterns[i]:gsub('-', '%%-')
     local comp = components[j]
     j = j - 1
     local start, endup = comp:find(pat, 0)
