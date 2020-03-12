@@ -5,7 +5,7 @@
 -- Based on z.lua - a cd command that learns, by skywind 2018, 2019, 2020
 -- Licensed under MIT license.
 --
--- Version 1.0.0, Last Modified: 2019/03/22
+-- Version 1.5.0, Last Modified: 2020/03/12
 --
 -- * based on z.lua
 -- * compatible with lua 5.1, 5.2, 5.3+, and luajit
