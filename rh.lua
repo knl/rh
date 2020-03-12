@@ -951,10 +951,9 @@ end
 
 
 -----------------------------------------------------------------------
--- calculate jump dir
+-- do a jump base on the table
 ---local --------------------------------------------------------------
-function rh_do_cd(patterns)
-  local M = rh_match(patterns)
+function rh_do_cd_for_matches(M)
   if M == nil then
     return nil
   end
@@ -970,6 +969,15 @@ function rh_do_cd(patterns)
       return M[1].name
     end
   end
+end
+
+
+-----------------------------------------------------------------------
+-- calculate jump dir
+---local --------------------------------------------------------------
+function rh_do_cd(patterns)
+  local M = rh_match(patterns)
+  return rh_do_cd_for_matches(M)
 end
 
 
@@ -998,8 +1006,9 @@ function rh_checkout(url)
       local root = os.path.join(os.path.expand(RH_ROOT), whole)
       os.execute("mkdir -p '" .. root .. "'")
       os.execute("cd '" .. root .. "' && git clone '" .. url .. "' .")
+      return root
     end
-    return root
+    return rh_do_cd_for_matches(M)
   end
 end
 
