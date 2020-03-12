@@ -1146,12 +1146,13 @@ fi
 local script_complete_zsh = [[
 _rhlua_zsh_tab_completion() {
   # tab completion
-  local compl
-  read -l compl
   (( $+compstate )) && compstate[insert]=menu # no expand
-  reply=(${(f)"$(_rhlua --complete "$compl")"})
+  local -a tmp=(${(f)"$(_zlua --complete "${words/_zlua/z}")"})
+	_describe "directory" tmp -U
 }
-compctl -U -K _rhlua_zsh_tab_completion _rhlua
+if [ "${+functions[compdef]}" -ne 0 ]; then
+  compdef _zlua_zsh_tab_completion _zlua 2> /dev/null
+fi
 ]]
 
 
