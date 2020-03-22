@@ -15,9 +15,14 @@ in the same manner as go modules, that is,
 `~/work/server/organization/repository`.
 
 `rh.lua` is fully implemented in lua in order to make it fast. `rh.lua` is
-heavily influenced and based on [`z.lua`](https://github.com/skywind3000/z.lua).
+heavily influenced and based on [`z.lua`](https://github.com/skywind3000/z.lua),
+from which it took all filesystem/datastore code.
 
 ## Usage
+
+<p align="center">
+  <img width="600" src="http://knezevic.ch/files/rh.svg">
+</p>
 
 * `rh.lua` lists all known repositories under predefined umbrella folder (that
   is set during the installation).
